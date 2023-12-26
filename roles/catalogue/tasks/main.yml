@@ -2,3 +2,8 @@
   ansible.builtin.import_role:
     name: common
     tasks_from: nodejs
+
+- name: Load Schema Setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: mongodb_schema_setup
