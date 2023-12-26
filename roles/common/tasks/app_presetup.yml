@@ -1,4 +1,4 @@
-- name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+- name: Add roboshop user
   ansible.builtin.user:
     name: roboshop
 
