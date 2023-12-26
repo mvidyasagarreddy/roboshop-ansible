@@ -7,7 +7,7 @@
         src: mongodb.repo
         dest: /etc/yum.repos.d/mongodb.repo
 
-    - name: Install the latest version of nginx
+    - name: Install the latest version of mongodb org
       ansible.builtin.yum:
         name: mongodb-org
         state: latest
@@ -18,7 +18,7 @@
         regexp: '127.0.0.1'
         replace: '0.0.0.0'
 
-    - name: Start Nginx Service
+    - name: Start Mongod Service
       ansible.builtin.systemd:
         state: restarted
         name: mongod
