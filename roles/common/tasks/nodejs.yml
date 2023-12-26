@@ -5,7 +5,7 @@
   ansible.builtin.yum:
     name: nodejs
     state: installed
-    
+
 
     app_presetup
     
@@ -14,4 +14,4 @@
     stat_check $?
     
     systemd_setup
-  }
+}
