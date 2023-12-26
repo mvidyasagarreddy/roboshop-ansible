@@ -7,7 +7,7 @@
     state: installed
 
 - name: App Pre-requisites
-  ansible.builtin.import_tasks:
+  ansible.builtin.include_tasks:
     file: app_presetup
 
 #    echo -e "${color} Install NodeJS Dependencies${nocolor}"
