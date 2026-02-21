@@ -3,4 +3,8 @@
   become: yes
   vars:
     component: catalogue
+  tasks:
+    - name: load nodejs
+      ansible.builtin.include-tasks:
+      file: nodejs.yml
   
