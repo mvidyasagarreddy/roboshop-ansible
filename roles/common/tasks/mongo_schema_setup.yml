@@ -15,7 +15,7 @@
 
 - name: Load MongoDB schema
   shell: >
-    mongo --host mongodb-dev.devopsb73.store
+    mongo --host mongodb-dev.roboshop.blog
     < /app/schema/{{ component }}.js
   args:
     executable: /bin/bash
