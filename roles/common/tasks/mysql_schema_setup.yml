@@ -1,8 +1,8 @@
 
-# - name: Install MySQL client
-#   yum:
-#     name: mysql
-#     state: present
+- name: Install MySQL client
+  yum:
+    name: mysql
+    state: present
 
 # - name: Check if DB exists
 #   shell: >
@@ -21,15 +21,6 @@
 #     executable: /bin/bash
 #   when: "'{{ component }}' not in db_check.stdout"
 
-- name: Copy MongoDB Repo file
-  ansible.builtin.copy:
-    src: mongodb.repo
-    dest: /etc/yum.repos.d/mongodb.repo
-
-- name: Install MongoDB Client
-  ansible.builtin.yum:
-    name: mongodb-org-shell
-    state: installed
 
 - name: Load Schema
   ansible.builtin.shell: mongo --host mongodb-dev.roboshop.blog </app/schema/{{ component }}.sql
