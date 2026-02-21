@@ -13,16 +13,9 @@
     path: /app
     state: directory
 
-- name: Download application content
-  get_url:
-    url: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}.zip"
-    dest: "/tmp/{{ component }}.zip"
-    mode: '0644'
-
-
 - name: Extract application content
   unarchive:
-    src: "/tmp/{{ component }}.zip"
+    src: https://roboshop-artifacts.s3.amazonaws.com/{{ component }}.zip
     dest: /app
     remote_src: yes
 
