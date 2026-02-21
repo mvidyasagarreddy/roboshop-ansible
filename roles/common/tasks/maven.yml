@@ -45,6 +45,17 @@
 #  args:
 #    chdir: /app
 
+- name: Download Maven dependencies and build package
+  command: mvn clean package
+  args:
+    chdir: /app
+
+- name: Rename generated JAR file
+  command: mv target/{{ component }}-1.0.jar {{ component }}.jar
+  args:
+    chdir: /app
+
+
 - name: MySQL Schema Setup
   ansible.builtin.import_tasks:
     file: mysql_schema_setup.yml
