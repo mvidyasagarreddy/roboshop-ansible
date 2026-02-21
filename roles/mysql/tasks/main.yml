@@ -1,7 +1,7 @@
 - name: Disable MySQL default version
   ansible.builtin.shell: yum module disable mysql -y
 
-- name: COpy MySQL REpo file
+- name: Copy MySQL REpo file
   ansible.builtin.copy:
     src: mysql.repo
     dest: /etc/yum.repos.d/mysql.repo

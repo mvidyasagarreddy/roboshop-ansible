@@ -1,0 +1,22 @@
+
+- name: Install MySQL client
+  yum:
+    name: mysql
+    state: present
+
+- name: Check if DB exists
+  shell: >
+    mysql -h mysql-dev.roboshop.blog
+    -uroot -p{{ mysql_root_password }}
+    -e "SHOW DATABASES LIKE '{{ component }}';"
+  register: db_check
+  changed_when: false
+
+- name: Load MySQL schema if DB not exists
+  shell: >
+    mysql -h mysql-dev.roboshop.blog
+    -uroot -p{{ mysql_root_password }}
+    < /app/schema/{{ component }}.sql
+  args:
+    executable: /bin/bash
+  when: "'{{ component }}' not in db_check.stdout"

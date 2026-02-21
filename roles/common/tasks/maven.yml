@@ -1,0 +1,26 @@
+- name: Install Maven
+  yum:
+    name: maven
+    state: present
+
+# Call App Presetup
+- name: Run application presetup
+  include_tasks: app_presetup.yml
+
+- name: Download Maven dependencies and build package
+  command: mvn clean package
+  args:
+    chdir: /app
+
+- name: Rename generated JAR file
+  command: mv target/{{ component }}-1.0.jar {{ component }}.jar
+  args:
+    chdir: /app
+
+# Load MySQL Schema
+- name: Setup MySQL schema
+  include_tasks: mysql_schema_setup.yml
+
+# Setup Systemd Service
+- name: Setup systemd service
+  include_tasks: systemd_setup.yml
