@@ -1,0 +1,37 @@
+---
+# RabbitMQ Setup
+
+- name: Configure Erlang repository
+  shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash
+  args:
+    executable: /bin/bash
+
+
+- name: Configure RabbitMQ repository
+  shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash
+  args:
+    executable: /bin/bash
+
+
+- name: Install RabbitMQ Server
+  yum:
+    name: rabbitmq-server
+    state: present
+
+
+- name: Enable and start RabbitMQ service
+  systemd:
+    name: rabbitmq-server
+    enabled: yes
+    state: restarted
+
+
+- name: Create RabbitMQ application user
+  community.rabbitmq.rabbitmq_user:
+    user: roboshop
+    password: "{{ rabbitmq_app_password }}"
+    vhost: /
+    configure_priv: ".*"
+    read_priv: ".*"
+    write_priv: ".*"
+    state: present
