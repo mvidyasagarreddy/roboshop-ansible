@@ -1,12 +1,8 @@
-- name: Install EPEL
+- name: Install Remi repository manually
   yum:
-    name: epel-release
+    name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
     state: present
-
-- name: Install Remi repo
-  yum:
-    name: remi-release
-    state: present
+    disable_gpg_check: yes
 
 - name: Enable Redis 6.2 module
   command: dnf module enable redis:remi-6.2 -y
@@ -24,7 +20,6 @@
   loop:
     - /etc/redis.conf
     - /etc/redis/redis.conf
-  ignore_errors: yes
 
 - name: Enable and restart Redis
   systemd:
