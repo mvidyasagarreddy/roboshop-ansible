@@ -1,22 +1,38 @@
 
-- name: Install MySQL client
-  yum:
-    name: mysql
-    state: present
+# - name: Install MySQL client
+#   yum:
+#     name: mysql
+#     state: present
 
-- name: Check if DB exists
-  shell: >
-    mysql -h mysql-dev.roboshop.blog
-    -uroot -p{{ mysql_root_password }}
-    -e "SHOW DATABASES LIKE '{{ component }}';"
-  register: db_check
-  changed_when: false
+# - name: Check if DB exists
+#   shell: >
+#     mysql -h mysql-dev.roboshop.blog
+#     -uroot -p{{ mysql_root_password }}
+#     -e "SHOW DATABASES LIKE '{{ component }}';"
+#   register: db_check
+#   changed_when: false
 
-- name: Load MySQL schema if DB not exists
-  shell: >
-    mysql -h mysql-dev.roboshop.blog
-    -uroot -p{{ mysql_root_password }}
-    < /app/schema/{{ component }}.sql
-  args:
-    executable: /bin/bash
-  when: "'{{ component }}' not in db_check.stdout"
+# - name: Load MySQL schema if DB not exists
+#   shell: >
+#     mysql -h mysql-dev.roboshop.blog
+#     -uroot -p{{ mysql_root_password }}
+#     < /app/schema/{{ component }}.sql
+#   args:
+#     executable: /bin/bash
+#   when: "'{{ component }}' not in db_check.stdout"
+
+- name: Copy MongoDB Repo file
+  ansible.builtin.copy:
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongodb.repo
+
+- name: Install MongoDB Client
+  ansible.builtin.yum:
+    name: mongodb-org-shell
+    state: installed
+
+- name: Load Schema
+  ansible.builtin.shell: mongo --host mongodb-dev.rdevopsb73.online </app/schema/{{ component }}.js
+  # ansible.builtin.shell: mongo --ssl --host {{ lookup('amazon.aws.aws_ssm', 'roboshop.{{env}}.{{component}}.docdb_endpoint', region='us-east-1') }}:27017 --sslCAFile /app/rds-combined-ca-bundle.pem --username {{ lookup('amazon.aws.aws_ssm', 'roboshop.{{env}}.docdb.username', region='us-east-1') }} --password {{ lookup('amazon.aws.aws_ssm', 'roboshop.{{env}}.docdb.password', region='us-east-1') }} </app/schema/{{ component }}.js
+
+

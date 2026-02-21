@@ -1,26 +1,54 @@
+# - name: Install Maven
+#   yum:
+#     name: maven
+#     state: present
+
+# # Call App Presetup
+# - name: Run application presetup
+#   include_tasks: app_presetup.yml
+
+# - name: Download Maven dependencies and build package
+#   command: mvn clean package
+#   args:
+#     chdir: /app
+
+# - name: Rename generated JAR file
+#   command: mv target/{{ component }}-1.0.jar {{ component }}.jar
+#   args:
+#     chdir: /app
+
+# # Load MySQL Schema
+# - name: Setup MySQL schema
+#   include_tasks: mysql_schema_setup.yml
+
+# # Setup Systemd Service
+# - name: Setup systemd service
+#   include_tasks: systemd_setup.yml
+
 - name: Install Maven
-  yum:
+  ansible.builtin.yum:
     name: maven
-    state: present
+    state: installed
 
-# Call App Presetup
-- name: Run application presetup
-  include_tasks: app_presetup.yml
+# - name: Install Java
+#   ansible.builtin.yum:
+#     name: java-17-openjdk
+#     state: installed
 
-- name: Download Maven dependencies and build package
-  command: mvn clean package
-  args:
-    chdir: /app
+- name: App Pre-requisites
+  ansible.builtin.import_tasks:
+    file: app_presetup.yml
 
-- name: Rename generated JAR file
-  command: mv target/{{ component }}-1.0.jar {{ component }}.jar
-  args:
-    chdir: /app
+# this step goes with CI
+#- name: Download Maven Dependencies
+#  ansible.builtin.shell: mvn clean package ; mv target/{{ component }}-1.0.jar {{ component }}.jar
+#  args:
+#    chdir: /app
 
-# Load MySQL Schema
-- name: Setup MySQL schema
-  include_tasks: mysql_schema_setup.yml
+- name: MySQL Schema Setup
+  ansible.builtin.import_tasks:
+    file: mysql_schema_setup.yml
 
-# Setup Systemd Service
-- name: Setup systemd service
-  include_tasks: systemd_setup.yml
+- name: SystemD Setup
+  ansible.builtin.import_tasks:
+    file: systemd_setup.yml
