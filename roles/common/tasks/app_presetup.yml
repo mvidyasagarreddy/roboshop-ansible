@@ -1,0 +1,65 @@
+- name: Ensure roboshop user exists
+  user:
+    name: roboshop
+    state: present
+
+- name: Remove existing application directory
+  file:
+    path: /app
+    state: absent
+
+- name: Create application directory
+  file:
+    path: /app
+    state: directory
+
+- name: Download application content
+  get_url:
+    url: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}.zip"
+    dest: "/tmp/{{ component }}.zip"
+    mode: '0644'
+
+
+- name: Extract application content
+  unarchive:
+    src: "/tmp/{{ component }}.zip"
+    dest: /app
+    remote_src: yes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# app_presetup() {
+#   echo -e "${color} Add Application User${nocolor}"
+#   id roboshop &>>$log_file
+#   if [ $? -eq 1 ]; then
+#     useradd roboshop  &>>$log_file
+#   fi
+#   stat_check $?
+
+#   echo -e "${color} Create Application Directory ${nocolor}"
+#   rm -rf /app   &>>$log_file
+#   mkdir /app
+#   stat_check $?
+
+#   echo -e "${color} Download Application Content ${nocolor}"
+#   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip  &>>$log_file
+#   stat_check $?
+
+#   echo -e "${color} Extract Application Content${nocolor}"
+#   cd ${app_path}
+#   unzip /tmp/$component.zip  &>>$log_file
+#   stat_check $?
+# }
