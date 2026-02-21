@@ -1,26 +1,30 @@
-- name: Install Remi repository
+- name: Install EPEL
   yum:
-    name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    name: epel-release
+    state: present
+
+- name: Install Remi repo
+  yum:
+    name: remi-release
     state: present
 
 - name: Enable Redis 6.2 module
-  command: yum module enable redis:remi-6.2 -y
-  args:
-    creates: /etc/yum.repos.d/remi.repo
+  command: dnf module enable redis:remi-6.2 -y
 
 - name: Install Redis
   yum:
     name: redis
     state: present
 
-- name: Update Redis listen address in redis.conf
+- name: Update Redis bind address
   replace:
     path: "{{ item }}"
-    regexp: '^bind 127\.0\.0\.1'
+    regexp: '^bind .*'
     replace: 'bind 0.0.0.0'
   loop:
     - /etc/redis.conf
     - /etc/redis/redis.conf
+  ignore_errors: yes
 
 - name: Enable and restart Redis
   systemd:
