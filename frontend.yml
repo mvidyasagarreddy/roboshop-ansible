@@ -1,6 +1,0 @@
-- name: Install and start Nginx on CentOS
-  hosts: all
-  become: yes
-  roles:
-    - frontend
-
