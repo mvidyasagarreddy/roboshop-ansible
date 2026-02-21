@@ -1,0 +1,29 @@
+---
+- name: Install Python
+  yum:
+    name:
+      - python36
+      - gcc
+      - python3-devel
+    state: present
+ 
+- name: Run App Presetup
+  include_role:
+    name: common
+    tasks_from: app_presetup
+  vars:
+    component: payment
+
+- name: Install Python Dependencies
+  pip:
+    requirements: /app/requirements.txt
+    executable: pip3
+
+
+- name: Setup systemd
+  include_role:
+    name: common
+    tasks_from: systemd_setup
+  vars:
+    component: payment
+    roboshop_app_password: "{{ roboshop_app_password }}"
