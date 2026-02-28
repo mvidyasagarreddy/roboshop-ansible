@@ -2,7 +2,7 @@
 # Setup SystemD Service for Roboshop Component
 
 - name: Copy systemd service file
-  copy:
+  template:
     src: "{{ component }}.service"
     dest: /etc/systemd/system/{{ component }}.service
 
