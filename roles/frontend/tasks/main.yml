@@ -20,6 +20,11 @@
     dest: /usr/share/nginx/html
     remote_src: yes
 
+- name: Copy nginx configuration
+  ansible.builtin.template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
 - name: Update Frontend Configuration
   copy:
     src: roboshop.conf
