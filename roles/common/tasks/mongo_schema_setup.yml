@@ -4,12 +4,12 @@
 - name: Copy MongoDB repo file
   copy:
     src: mongo.repo
-    dest: /etc/yum.repos.d/mongodb.repo
+    dest: /etc/yum.repos.d/mongo.repo
 
 
-- name: Install MongoDB client (mongodb-org-shell)
-  yum:
-    name: mongodb-org-shell
+- name: Install MongoDB
+  ansible.builtin.dnf:
+    name: mongodb-org
     state: present
 
 
