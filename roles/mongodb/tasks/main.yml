@@ -1,7 +1,7 @@
 - name: Install boto3 and botocore
   ansible.builtin.import_role:
     name: common
-    file: boto
+    tasks_from: boto
 
 - name: Copy MongoDB repo
   ansible.builtin.template:
