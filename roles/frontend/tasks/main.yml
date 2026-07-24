@@ -1,3 +1,7 @@
+- name: Install boto3 and botocore
+  ansible.builtin.import_tasks:
+    file: boto.yml
+
 - name: Ensure Nginx is at the latest version
   ansible.builtin.yum:
     name: nginx

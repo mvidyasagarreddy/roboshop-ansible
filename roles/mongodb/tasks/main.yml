@@ -1,3 +1,7 @@
+- name: Install boto3 and botocore
+  ansible.builtin.import_tasks:
+    file: boto.yml
+
 - name: Copy MongoDB repo
   ansible.builtin.template:
     src: mongo.repo
