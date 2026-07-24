@@ -1,11 +1,6 @@
-- name: Install Python pip
-  dnf:
-    name: python3-pip
-    state: present
-
-- name: Install boto3 and botocore
+- name: Install boto3 and botocore for Ansible (Python 3.13)
   pip:
     name:
       - boto3
       - botocore
-    executable: pip3
+    executable: /usr/bin/pip3.13
