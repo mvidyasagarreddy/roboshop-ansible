@@ -8,7 +8,7 @@
 
 - name: Update Redis bind address
   replace:
-    path: /etc/redis.conf
+    path: /etc/redis/redis.conf
     regexp: '^bind .*'
     replace: 'bind 0.0.0.0'
 
