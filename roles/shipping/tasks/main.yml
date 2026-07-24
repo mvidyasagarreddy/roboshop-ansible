@@ -1,6 +1,7 @@
 - name: Install boto3 and botocore
-  ansible.builtin.import_tasks:
-    file: boto.yml
+  ansible.builtin.import_role:
+    name: common
+    file: boto
 
 - name: load maven
   ansible.builtin.import_role:
