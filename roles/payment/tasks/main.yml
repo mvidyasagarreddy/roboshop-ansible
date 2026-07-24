@@ -1,8 +1,8 @@
 ---
 - name: Install Python
-  yum:
+  dnf:
     name:
-      - python36
+      - python3
       - gcc
       - python3-devel
     state: present

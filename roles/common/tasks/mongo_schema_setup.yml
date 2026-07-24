@@ -3,7 +3,7 @@
 
 - name: Copy MongoDB repo file
   copy:
-    src: mongodb.repo
+    src: mongo.repo
     dest: /etc/yum.repos.d/mongodb.repo
 
 
