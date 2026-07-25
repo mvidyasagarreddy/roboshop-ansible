@@ -26,7 +26,7 @@
 #   include_tasks: systemd_setup.yml
 
 - name: Install Maven
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: maven
     state: installed
 
@@ -54,11 +54,6 @@
   command: mv target/{{ component }}-1.0.jar {{ component }}.jar
   args:
     chdir: /app
-
-
-- name: MySQL Schema Setup
-  ansible.builtin.import_tasks:
-    file: mysql_schema_setup.yml
 
 - name: SystemD Setup
   ansible.builtin.import_tasks:

@@ -3,10 +3,28 @@
     name: common
     tasks_from: boto
 
-- name: load nodejs
-  ansible.builtin.import_role:
+- name: Load NodeJS
+  ansible.builtin.include_role:
     name: common
     tasks_from: nodejs
+
+- name: Copy MongoDB repo file
+  ansible.builtin.template:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: Install MongoDB
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: installed
+
+- name: Load Master Data
+  ansible.builtin.shell: mongosh --host mongodb-{{ env }}.rdevopsb83.online </app/db/master-data.js
+
+
+
+
+
 
 # - name: load schema
 #   ansible.builtin.import_role:

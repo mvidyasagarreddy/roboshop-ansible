@@ -1,8 +1,8 @@
-- name: Configuring NodeJS Repos
-  ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+- name: Disable Nodejs and enable Nodejs 20
+  ansible.builtin.shell: dnf module disable nodejs -y ;dnf module enable nodejs:20 -y
 
 - name: Install NodeJS
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: nodejs
     state: installed
 
@@ -15,11 +15,6 @@
   args:
     chdir: /app
 
-- name: Load Schema
-  ansible.builtin.import_tasks:
-    file: mongo_schema_setup.yml
-  when: load_schema
-
-- name: systemd setup
-  ansible.builtin.import_tasks:
+- name: Include systemd_setup
+  ansible.builtin.include_tasks:
     file: systemd_setup.yml
