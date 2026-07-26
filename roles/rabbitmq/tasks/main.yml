@@ -2,8 +2,9 @@
 # RabbitMQ Setup
 
 - name: Install boto3 and botocore
-  ansible.builtin.import_tasks:
-    file: boto.yml
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: boto
 
 - name: Configure Erlang repository
   shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash
